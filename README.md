@@ -12,7 +12,7 @@ Repositori ini digunakan untuk menyimpan aplikasi CRUD siswa sebagai bagian dari
 
 * Masuk ke AWS Console → EC2 → Launch Instance.
 * Berikan nama instance bebas (contoh: `psat-deploy`).
-* Pilih OS: **Ubuntu Server** (misalnya Ubuntu 22.04 LTS).
+* Pilih OS: **Ubuntu Server** (misalnya Ubuntu 24.04 LTS).
 * Instance type: `t2.nano`.
 * Key Pair: pilih `vockey`.
 * Network Settings: pilih **Select existing security group** lalu pilih **SG server web** (harus sudah ada dan membuka port 80/443).
