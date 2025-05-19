@@ -1,49 +1,98 @@
-# Penilaian Sumatif Akhir Tahun
-## Mapil DevOps XI TJKT 1 - Penilaian Praktek
-### SMKN 1 Banyumas - TA. 2024 2025
+# PSAT2425 - Panduan Deploy Aplikasi CRUD Siswa di AWS EC2
 
+## Deskripsi
 
-#
-# Cara mendeploy Aplikasi
+Repositori ini digunakan untuk menyimpan aplikasi CRUD siswa sebagai bagian dari penilaian praktek PSAT 2025.
 
-## 1. Buat File .env
+---
 
-File .env adalah file environment sistem mirip seperti file konfig.php
-#
-isi file .env sebagai berikut
+## Langkah Deploy di AWS EC2
 
-```.env
-DB_USER=....  (isi dengan user RDS)
-DB_PASS=....  (isi dengan password RDS)
-DB_NAME=....  (isi dengan nama database yang akan dibuat di RDS)
-DB_HOST=....  (isi dengan Endpoint RDS)
+### 1. Buat Instance Baru
+
+* Masuk ke AWS Console → EC2 → Launch Instance.
+* Berikan nama instance bebas (contoh: `psat-deploy`).
+* Pilih OS: **Ubuntu Server** (misalnya Ubuntu 22.04 LTS).
+* Instance type: `t2.nano`.
+* Key Pair: pilih `vockey`.
+* Network Settings: pilih **Select existing security group** lalu pilih **SG server web** (harus sudah ada dan membuka port 80/443).
+
+---
+
+### 2. Tambahkan Script di User Data
+
+Scroll ke bagian **Advanced Details** → **User data**, lalu isi dengan skrip ini:
+
+```bash
+#!/bin/bash
+sudo apt update -y
+sudo apt install -y apache2 php php-mysql libapache2-mod-php mysql-client
+sudo rm -rf /var/www/html/{*,.*}
+sudo git clone https://github.com/SinSerenee/psat2425.git /var/www/html
+sudo chmod -R 777 /var/www/html
+echo DB_USER=admin > /var/www/html/.env
+echo DB_PASS=MyP4ssw0rd12345 >> /var/www/html/.env
+echo DB_NAME=crudsiswa  >> /var/www/html/.env
+echo DB_HOST=database-1.cgxshlk266oq.us-east-1.rds.amazonaws.com >> /var/www/html/.env
+sudo apt install openssl
+sudo a2enmod ssl
+sudo a2ensite default-ssl.conf
+sudo systemctl reload apache2
 ```
 
-contoh:
+> ⚠️ Pastikan `DB_PASS` dan `DB_HOST` disesuaikan dengan info RDS kamu sendiri.
 
-```.env
-DB_USER=admin
-DB_PASS=P4ssw0rd123
-DB_NAME=psat2425
-DB_HOST=rdsku.czt6n8ylfvyb.us-east-1.rds.amazonaws.com
+---
+
+### 3. Launch Instance
+
+* Klik **Launch Instance**
+* Tunggu statusnya sampai **Running**
+
+---
+
+### 4. Verifikasi
+
+Setelah instance aktif:
+
+```bash
+cd /var/www/html
+ls
 ```
 
-## 2. Jalankan 
-Jalankan dengan username dan password default berikut ini
-#
-### username = admin
-### password = 123
-#
+Jika muncul file seperti `README.md`, `dashboard.php`, dan lainnya, berarti aplikasi berhasil ter-deploy.
 
-Kemudian inputkanlah data sesuai dengan datamu
+---
 
+### 5. Buka di Browser
 
-#
-# Pengumpulan Hasil
-Catat Link repositry anda
+Buka:
 
-Screenshoot halaman Data Siswa (dashboard.php) yang sudah ada namamu
+```
+http://<Public-IP-Instance-Kamu>
+```
 
-Kumpulkan ke Form yang ada di dalam GC 
+Kamu akan melihat aplikasi CRUD siswa tampil.
 
-#
+---
+
+### 6. Isi Aplikasi
+
+* Masukkan data siswa kamu
+* Screenshot halaman hasil isian data
+* Upload screenshot dan link repo GitHub ke **Google Form** yang disediakan
+
+---
+
+## Catatan
+
+* `UserData` hanya berjalan saat pertama kali instance dibuat.
+* Jika muncul **HTTP Error 500**:
+
+  * Cek file `.env`
+  * Tes koneksi ke RDS
+  * Periksa log Apache:
+
+    ```bash
+    sudo tail -n 20 /var/log/apache2/error.log
+    ```
