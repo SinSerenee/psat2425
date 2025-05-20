@@ -2,60 +2,26 @@ PSAT2425 - Panduan Lengkap Deploy CRUD Siswa di AWS EC2 + RDS
 Deskripsi
 Repositori ini digunakan untuk menyimpan aplikasi CRUD siswa sebagai bagian dari penilaian praktek PSAT 2025.
 
-Persiapan:
-1. Buat Security Group di EC2
-SG-ServerDB (untuk database)
-Inbound Rule:
+---
 
-Type: MySQL/Aurora
+## Langkah Deploy di AWS EC2
 
-Port: 3306
+### 1. Buat Instance Baru
 
-Source: Anywhere (0.0.0.0/0)
+* Masuk ke AWS Console → EC2 → Launch Instance.
+* Berikan nama instance bebas (contoh: `psat-deploy`).
+* Pilih OS: **Ubuntu Server** (misalnya Ubuntu 22.04 LTS).
+* Instance type: `t2.nano`.
+* Key Pair: pilih `vockey`.
+* Network Settings: pilih **Select existing security group** lalu pilih **SG server web** (harus sudah ada dan membuka port 80/443).
 
-SG-ServerWeb (untuk aplikasi web)
-Inbound Rules:
+---
 
-SSH (port 22) – from Anywhere (0.0.0.0/0)
+### 2. Tambahkan Script di User Data
 
-HTTP (port 80) – from Anywhere (0.0.0.0/0)
+Scroll ke bagian **Advanced Details** → **User data**, lalu isi dengan skrip ini:
 
-HTTPS (port 443) – from Anywhere (0.0.0.0/0)
-
-Database RDS (MySQL)
-1. Buka AWS Console → Cari RDS
-2. Klik Create Database
-Engine Type: pilih MySQL
-
-Template: pilih Free Tier
-
-DB Cluster Identifier: contoh serverdb
-
-Master Username: biarkan default (admin)
-
-Master Password: isi MyP4ssw0rd12345
-
-Public Access: No
-
-VPC Security Group: pilih SG-ServerDB (yang buka port 3306 dari 0.0.0.0/0)
-
-Catat endpoint host database setelah RDS selesai dibuat, misalnya:
-database-1.cgxshlk266oq.us-east-1.rds.amazonaws.com
-
-Deploy Aplikasi ke EC2
-1. Launch EC2 Instance
-OS: Ubuntu Server (contoh: Ubuntu 22.04 LTS)
-
-Instance Type: t2.nano
-
-Key Pair: pilih vockey (buat terlebih dahulu kalau belum ada)
-
-Security Group: pilih SG-ServerWeb
-
-2. Isi Bagian User Data (Advanced Details)
-bash
-Copy
-Edit
+```bash
 #!/bin/bash
 sudo apt update -y
 sudo apt install -y apache2 php php-mysql libapache2-mod-php mysql-client git
@@ -88,33 +54,41 @@ Copy
 Edit
 cd /var/www/html
 ls
-Jika muncul file seperti dashboard.php, style.css, dan README.md, berarti berhasil.
+```
 
-5. Isi Aplikasi
-Masukkan user : admin
-Masukkan password : 123
+Jika muncul file seperti `README.md`, `dashboard.php`, dan lainnya, berarti aplikasi berhasil ter-deploy.
 
-Masukkan beberapa data siswa.
+---
 
-Screenshot hasil tampilan aplikasi.
+### 5. Buka di Browser
 
-6. Upload
-Kirim link GitHub repo dan screenshot hasil aplikasi ke Google Form PSAT.
+Buka:
 
-Troubleshooting
-Jika muncul HTTP ERROR 500:
+```
+http://<Public-IP-Instance-Kamu>
+```
 
-Periksa .env
+Kamu akan melihat aplikasi CRUD siswa tampil.
 
-Tes koneksi ke DB:
+---
 
-bash
-Copy
-Edit
-mysql -h <DB_HOST> -u admin -p
-Lihat log error:
+### 6. Isi Aplikasi
 
-bash
-Copy
-Edit
-sudo tail -n 20 /var/log/apache2/error.log
+* Masukkan data siswa kamu
+* Screenshot halaman hasil isian data
+* Upload screenshot dan link repo GitHub ke **Google Form** yang disediakan
+
+---
+
+## Catatan
+
+* `UserData` hanya berjalan saat pertama kali instance dibuat.
+* Jika muncul **HTTP Error 500**:
+
+  * Cek file `.env`
+  * Tes koneksi ke RDS
+  * Periksa log Apache:
+
+    ```bash
+    sudo tail -n 20 /var/log/apache2/error.log
+    ```
