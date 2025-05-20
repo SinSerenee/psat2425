@@ -1,4 +1,3 @@
-````markdown
 # PSAT2425 - Panduan Lengkap Deploy CRUD Siswa di AWS EC2 + RDS
 
 ## Deskripsi
@@ -73,7 +72,6 @@ sudo systemctl reload apache2
 
 > Ganti `DB_HOST` dan `DB_PASS` sesuai konfigurasi RDS kamu jika berbeda.
 
----
 
 ## Verifikasi
 
