@@ -57,15 +57,15 @@ Saat membuat instance, scroll ke bagian **Advanced Details → User Data**, lalu
 ```bash
 #!/bin/bash
 sudo apt update -y
-sudo apt install -y apache2 php php-mysql libapache2-mod-php mysql-client git
+sudo apt install -y apache2 php php-mysql libapache2-mod-php mysql-client
 sudo rm -rf /var/www/html/{*,.*}
 sudo git clone https://github.com/SinSerenee/psat2425.git /var/www/html
 sudo chmod -R 777 /var/www/html
 echo DB_USER=admin > /var/www/html/.env
 echo DB_PASS=MyP4ssw0rd12345 >> /var/www/html/.env
-echo DB_NAME=crudsiswa >> /var/www/html/.env
+echo DB_NAME=crudsiswa  >> /var/www/html/.env
 echo DB_HOST=database-1.cgxshlk266oq.us-east-1.rds.amazonaws.com >> /var/www/html/.env
-sudo apt install -y openssl
+sudo apt install openssl
 sudo a2enmod ssl
 sudo a2ensite default-ssl.conf
 sudo systemctl reload apache2
