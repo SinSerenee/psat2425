@@ -76,11 +76,17 @@ Kamu akan melihat aplikasi CRUD siswa tampil.
 
 ---
 
-### 6. Isi Aplikasi
+### 6. Login dan Isi Aplikasi
 
-* Masukkan data siswa kamu
-* Screenshot halaman hasil isian data
-* Upload screenshot dan link repo GitHub ke **Google Form** yang disediakan
+Masukkan username: admin
+
+Masukkan password: 123
+
+Setelah login, tambahkan data siswa kamu
+
+Screenshot halaman hasil isian data
+
+Upload screenshot dan link repo GitHub ke Google Form yang disediakan
 
 ---
 
