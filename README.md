@@ -1,14 +1,14 @@
 ````markdown
 # PSAT2425 - Panduan Lengkap Deploy CRUD Siswa di AWS EC2 + RDS
 
-## 📌 Deskripsi
+## Deskripsi
 Repositori ini menyimpan aplikasi CRUD siswa untuk keperluan penilaian praktek PSAT 2025. Panduan ini menjelaskan proses lengkap mulai dari setup database hingga deploy aplikasi menggunakan AWS EC2 dan UserData.
 
 ---
 
-## 🛠️ Persiapan
+## Persiapan
 
-### 🔐 Buat Security Group di EC2
+### Buat Security Group di EC2
 
 #### SG-ServerDB
 - **Inbound Rule**:
@@ -24,7 +24,7 @@ Repositori ini menyimpan aplikasi CRUD siswa untuk keperluan penilaian praktek P
 
 ---
 
-## 🗄️ Konfigurasi Database RDS (MySQL)
+## Konfigurasi Database RDS (MySQL)
 
 ### Langkah-langkah:
 1. Buka **AWS Console** → cari **RDS**.
@@ -43,7 +43,7 @@ Repositori ini menyimpan aplikasi CRUD siswa untuk keperluan penilaian praktek P
 
 ---
 
-## 🚀 Deploy Aplikasi ke AWS EC2
+## Deploy Aplikasi ke AWS EC2
 
 ### 1. Launch Instance
 - OS: **Ubuntu Server 22.04 LTS**
@@ -71,11 +71,11 @@ sudo a2ensite default-ssl.conf
 sudo systemctl reload apache2
 ````
 
-> ⚠️ Ganti `DB_HOST` dan `DB_PASS` sesuai konfigurasi RDS kamu jika berbeda.
+> Ganti `DB_HOST` dan `DB_PASS` sesuai konfigurasi RDS kamu jika berbeda.
 
 ---
 
-## ✅ Verifikasi
+## Verifikasi
 
 ### Cek dari browser:
 
@@ -96,7 +96,7 @@ Kalau muncul file seperti `dashboard.php`, `style.css`, dan `README.md`, berarti
 
 ---
 
-## 🧾 Pengisian Data
+## Pengisian Data
 * Masukkan user : admin
 * Masukkan password : 123
 * Tambahkan data siswa ke dalam aplikasi.
@@ -105,9 +105,9 @@ Kalau muncul file seperti `dashboard.php`, `style.css`, dan `README.md`, berarti
 
 ---
 
-## 🆘 Troubleshooting
+## Troubleshooting
 
-* 🔥 **Error 500 (Internal Server Error)?**
+* **Error 500 (Internal Server Error)?**
 
   * Periksa file `.env`
   * Tes koneksi ke DB:
@@ -123,7 +123,7 @@ Kalau muncul file seperti `dashboard.php`, `style.css`, dan `README.md`, berarti
 
 ---
 
-## 📎 Link Repositori
+## Link Repositori
 
 [https://github.com/SinSerenee/psat2425](https://github.com/SinSerenee/psat2425)
 
