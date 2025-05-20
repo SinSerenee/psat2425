@@ -118,17 +118,3 @@ Kalau muncul file seperti `dashboard.php`, `style.css`, dan `README.md`, berarti
     ```bash
     sudo tail -n 20 /var/log/apache2/error.log
     ```
-
----
-
-## Link Repositori
-
-[https://github.com/SinSerenee/psat2425](https://github.com/SinSerenee/psat2425)
-
----
-
-Semoga sukses dan lancar dalam pengumpulan tugas PSAT! 🎯
-
-```
-
----
